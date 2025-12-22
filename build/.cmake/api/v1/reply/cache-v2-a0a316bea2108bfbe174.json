@@ -55,7 +55,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/phyw/Documents/Projs/Opengl/Books/Gordon/build"
+			"value" : "/home/phyw/Documents/Projs/Opengl/Books/GordonBook_OpenGL/build"
 		},
 		{
 			"name" : "CMAKE_CACHE_MAJOR_VERSION",
@@ -158,8 +158,8 @@
 					"value" : "CXX compiler"
 				}
 			],
-			"type" : "FILEPATH",
-			"value" : "/usr/bin/c++"
+			"type" : "STRING",
+			"value" : "/usr/bin/g++"
 		},
 		{
 			"name" : "CMAKE_CXX_COMPILER_AR",
@@ -286,8 +286,8 @@
 					"value" : "C compiler"
 				}
 			],
-			"type" : "FILEPATH",
-			"value" : "/usr/bin/cc"
+			"type" : "STRING",
+			"value" : "/usr/bin/gcc"
 		},
 		{
 			"name" : "CMAKE_C_COMPILER_AR",
@@ -555,7 +555,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/phyw/Documents/Projs/Opengl/Books/Gordon/build/CMakeFiles/pkgRedirects"
+			"value" : "/home/phyw/Documents/Projs/Opengl/Books/GordonBook_OpenGL/build/CMakeFiles/pkgRedirects"
 		},
 		{
 			"name" : "CMAKE_GENERATOR",
@@ -627,7 +627,7 @@
 				}
 			],
 			"type" : "INTERNAL",
-			"value" : "/home/phyw/Documents/Projs/Opengl/Books/Gordon"
+			"value" : "/home/phyw/Documents/Projs/Opengl/Books/GordonBook_OpenGL"
 		},
 		{
 			"name" : "CMAKE_INSTALL_PREFIX",
@@ -1263,7 +1263,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/phyw/Documents/Projs/Opengl/Books/Gordon/build"
+			"value" : "/home/phyw/Documents/Projs/Opengl/Books/GordonBook_OpenGL/build"
 		},
 		{
 			"name" : "Gordon_IS_TOP_LEVEL",
@@ -1287,7 +1287,7 @@
 				}
 			],
 			"type" : "STATIC",
-			"value" : "/home/phyw/Documents/Projs/Opengl/Books/Gordon"
+			"value" : "/home/phyw/Documents/Projs/Opengl/Books/GordonBook_OpenGL"
 		},
 		{
 			"name" : "OPENGL_EGL_INCLUDE_DIR",

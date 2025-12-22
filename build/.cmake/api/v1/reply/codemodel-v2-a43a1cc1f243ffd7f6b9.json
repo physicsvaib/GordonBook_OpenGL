@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/home/phyw/Documents/Projs/Opengl/Books/Gordon/build",
-		"source" : "/home/phyw/Documents/Projs/Opengl/Books/Gordon"
+		"build" : "/home/phyw/Documents/Projs/Opengl/Books/GordonBook_OpenGL/build",
+		"source" : "/home/phyw/Documents/Projs/Opengl/Books/GordonBook_OpenGL"
 	},
 	"version" : 
 	{
