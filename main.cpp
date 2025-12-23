@@ -3,9 +3,9 @@
 
 GLuint CreateShaderProgram()
 {
-  const char *vShaderSource = "#version 439\n"
+  const char *vShaderSource = "#version 430\n"
                               "void main(void)\n"
-                              "{glPosition = vec4(0.2,0.2,0.0,1.0);}";
+                              "{gl_Position = vec4(0.2,0.2,0.0,1.0);}";
 
   const char *fShaderSource = "#version 430\n"
                               "out vec4 color;\n"
@@ -33,6 +33,7 @@ void init(GLFWwindow *window)
   renderingProgram = CreateShaderProgram();
   glGenVertexArrays(numVAOs, VAO);
   glBindVertexArray(VAO[0]);
+  glPointSize(30.0f);
 }
 
 void display(GLFWwindow *window, double currentTime)
