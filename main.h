@@ -13,6 +13,11 @@ const int numVAOs = 1;
 GLuint renderingProgram;
 GLuint VAO[numVAOs];
 
+bool GLCheckErrors();
+void GetShaderCompileError(GLuint shader);
+void GetProgramCompileError(GLuint program);
+
+GLuint CreateGLShader(GLuint type, const char *source);
 GLuint CreateShaderProgram();
 void init(GLFWwindow *window);
 void display(GLFWwindow *window, double currentTime);

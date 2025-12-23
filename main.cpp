@@ -1,6 +1,72 @@
 
 #include "main.h"
 
+bool GLCheckErrors()
+{
+  bool errorFound = false;
+
+  for (GLuint error = glGetError(); error != GL_NO_ERROR; error = glGetError())
+  {
+    std::cerr << "glError: " << error << std::endl;
+    errorFound = true;
+  }
+
+  return errorFound;
+}
+
+void GetShaderCompileError(GLuint shader)
+{
+  int len = 0;
+  int charWritten = 0;
+  char *log;
+
+  glGetShaderiv(shader, GL_INFO_LOG_LENGTH, &len);
+
+  if (len > 0)
+  {
+    log = new char[len];
+    glGetShaderInfoLog(shader, len, &charWritten, log);
+    std::cerr << "Shader Info Log:" << log << std::endl;
+    delete[] log;
+  }
+}
+
+void GetProgramCompileError(GLuint program)
+{
+  int len = 0;
+  int charWritten = 0;
+  char *log;
+
+  glGetProgramiv(program, GL_INFO_LOG_LENGTH, &len);
+
+  if (len > 0)
+  {
+    log = new char[len];
+    glGetProgramInfoLog(program, len, &charWritten, log);
+    std::cerr << "Program Info Log:" << log << std::endl;
+    delete[] log;
+  }
+}
+
+GLuint CreateGLShader(GLuint type, const char *source)
+{
+  GLuint shader = glCreateShader(type);
+  glShaderSource(shader, 1, &source, NULL);
+  glCompileShader(shader);
+
+  GLCheckErrors();
+  GLint shaderCompiling;
+  glGetShaderiv(shader, GL_COMPILE_STATUS, &shaderCompiling);
+
+  if (shaderCompiling != 1)
+  {
+    GetShaderCompileError(shader);
+    exit(EXIT_FAILURE);
+  }
+
+  return shader;
+}
+
 GLuint CreateShaderProgram()
 {
   const char *vShaderSource = "#version 430\n"
@@ -10,20 +76,23 @@ GLuint CreateShaderProgram()
   const char *fShaderSource = "#version 430\n"
                               "out vec4 color;\n"
                               "void main(void)\n"
-                              "{color = vec4(0.0, 1.0, 1.0, 1.0);}";
+                              "{color = vec4(gl_FragCoord.xy / 600,0.5, 1.0);}";
 
-  GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
-  glShaderSource(vShader, 1, &vShaderSource, NULL);
-  glCompileShader(vShader);
-
-  GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
-  glShaderSource(fShader, 1, &fShaderSource, NULL);
-  glCompileShader(fShader);
+  GLuint vShader = CreateGLShader(GL_VERTEX_SHADER, vShaderSource);
+  GLuint fShader = CreateGLShader(GL_FRAGMENT_SHADER, fShaderSource);
 
   GLuint vfProgram = glCreateProgram();
   glAttachShader(vfProgram, vShader);
   glAttachShader(vfProgram, fShader);
   glLinkProgram(vfProgram);
+
+  GLCheckErrors();
+  GLint programLinked;
+  glGetProgramiv(vfProgram, GL_LINK_STATUS, &programLinked);
+  if (programLinked != 1)
+  {
+    GetProgramCompileError(vfProgram);
+  }
 
   return vfProgram;
 }
@@ -31,9 +100,11 @@ GLuint CreateShaderProgram()
 void init(GLFWwindow *window)
 {
   renderingProgram = CreateShaderProgram();
+
   glGenVertexArrays(numVAOs, VAO);
   glBindVertexArray(VAO[0]);
-  glPointSize(30.0f);
+
+  glPointSize(300.0f);
 }
 
 void display(GLFWwindow *window, double currentTime)
