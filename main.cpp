@@ -1,12 +1,47 @@
 
 #include "main.h"
 
-void init(GLFWwindow *window) {}
+GLuint CreateShaderProgram()
+{
+  const char *vShaderSource = "#version 439\n"
+                              "void main(void)\n"
+                              "{glPosition = vec4(0.2,0.2,0.0,1.0);}";
+
+  const char *fShaderSource = "#version 430\n"
+                              "out vec4 color;\n"
+                              "void main(void)\n"
+                              "{color = vec4(0.0, 1.0, 1.0, 1.0);}";
+
+  GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
+  glShaderSource(vShader, 1, &vShaderSource, NULL);
+  glCompileShader(vShader);
+
+  GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
+  glShaderSource(fShader, 1, &fShaderSource, NULL);
+  glCompileShader(fShader);
+
+  GLuint vfProgram = glCreateProgram();
+  glAttachShader(vfProgram, vShader);
+  glAttachShader(vfProgram, fShader);
+  glLinkProgram(vfProgram);
+
+  return vfProgram;
+}
+
+void init(GLFWwindow *window)
+{
+  renderingProgram = CreateShaderProgram();
+  glGenVertexArrays(numVAOs, VAO);
+  glBindVertexArray(VAO[0]);
+}
 
 void display(GLFWwindow *window, double currentTime)
 {
-  glClearColor(0.8f, 1.2f, 0.1f, 1.0f);
+  glClearColor(0.0f, 0.2f, 0.1f, 1.0f);
   glClear(GL_COLOR_BUFFER_BIT);
+
+  glUseProgram(renderingProgram);
+  glDrawArrays(GL_POINTS, 0, 1);
 }
 
 void SetWindowHints()
@@ -42,23 +77,16 @@ void MainLogic()
 {
   if (!glfwInit())
   {
-    ShowError("GLFW Failed to Init");
+    ShowError("GLFW init failed");
   }
 
   SetWindowHints();
 
-  GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Base Title", NULL, NULL);
-
-  if (window == nullptr)
-  {
-    ShowError("Failed to create a GLFW Window");
-  }
-
-  glfwMakeContextCurrent(window);
+  GLFWwindow *window = CreateWindow();
 
   if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
   {
-    ShowError("Failed to Init GLAD");
+    ShowError("GLAD init failed");
   }
 
   glfwSwapInterval(1);
@@ -68,6 +96,19 @@ void MainLogic()
   Loop(window);
 
   TerminateApp(window);
+}
+
+GLFWwindow *CreateWindow()
+{
+  GLFWwindow *window = glfwCreateWindow(WIDTH, HEIGHT, "Base", NULL, NULL);
+  if (!window)
+  {
+    ShowError("Window not created");
+    return nullptr;
+  }
+
+  glfwMakeContextCurrent(window);
+  return window;
 }
 
 int main(void)

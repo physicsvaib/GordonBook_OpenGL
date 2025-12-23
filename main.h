@@ -6,8 +6,14 @@
 #include <iostream>
 
 const int HEIGHT = 600;
-const int WIDTH = 600;
+const int WIDTH = 800;
 
+const int numVAOs = 1;
+
+GLuint renderingProgram;
+GLuint VAO[numVAOs];
+
+GLuint CreateShaderProgram();
 void init(GLFWwindow *window);
 void display(GLFWwindow *window, double currentTime);
 
@@ -18,6 +24,8 @@ void ShowError(std::string str);
 void TerminateApp(GLFWwindow *window);
 
 void MainLogic();
+
+GLFWwindow *CreateWindow();
 
 void Loop(GLFWwindow *window);
 
