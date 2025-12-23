@@ -1,5 +1,6 @@
 
 #include "main.h"
+#include "src/reader.h"
 
 bool GLCheckErrors()
 {
@@ -69,17 +70,13 @@ GLuint CreateGLShader(GLuint type, const char *source)
 
 GLuint CreateShaderProgram()
 {
-  const char *vShaderSource = "#version 430\n"
-                              "void main(void)\n"
-                              "{gl_Position = vec4(0.2,0.2,0.0,1.0);}";
 
-  const char *fShaderSource = "#version 430\n"
-                              "out vec4 color;\n"
-                              "void main(void)\n"
-                              "{color = vec4(gl_FragCoord.xy / 600,0.5, 1.0);}";
+  std::string vShaderSource = ReadDataFromFile("Shaders/vertShader.glsl");
+  std::string fShaderSource = ReadDataFromFile("Shaders/fragShader.glsl");
+  std::cout << vShaderSource << fShaderSource;
 
-  GLuint vShader = CreateGLShader(GL_VERTEX_SHADER, vShaderSource);
-  GLuint fShader = CreateGLShader(GL_FRAGMENT_SHADER, fShaderSource);
+  GLuint vShader = CreateGLShader(GL_VERTEX_SHADER, vShaderSource.c_str());
+  GLuint fShader = CreateGLShader(GL_FRAGMENT_SHADER, fShaderSource.c_str());
 
   GLuint vfProgram = glCreateProgram();
   glAttachShader(vfProgram, vShader);
@@ -185,6 +182,7 @@ GLFWwindow *CreateWindow()
 
 int main(void)
 {
+
   MainLogic();
 }
 

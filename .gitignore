@@ -26,6 +26,8 @@ CMakeUserPresets.json
 /install_manifest.txt
 /compile_commands.json
 /.vscode/
+**/build/
+
 
 # Cross-platform build remnants
 *.cmake
